@@ -18,6 +18,13 @@ const createButton = (type, title) => {
   return button;
 };
 
+const deleteTask = (event) => {
+  const task = event.target.closest("li");
+  task.remove();
+  checkEmpty(taskList, emptyPar);
+  checkEmpty(favoriteList, emptyFavPar);
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -35,11 +42,7 @@ const createTask = (event) => {
   const editButton = createButton("edit-btn", "Редагувати");
   const noEditButton = createButton("edit-btn", "Закрити");
 
-  deleteButton.addEventListener("click", () => {
-    newTask.remove();
-    checkEmpty(taskList, emptyPar);
-    checkEmpty(favoriteList, emptyFavPar);
-  });
+  deleteButton.addEventListener("click", deleteTask);
 
   completeButton.addEventListener("click", () => {
     if (taskList.contains(newTask)) {
