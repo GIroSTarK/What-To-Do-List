@@ -11,6 +11,13 @@ const checkEmpty = (list, p) => {
   else p.classList.remove("hide");
 };
 
+const createButton = (type, title) => {
+  const button = document.createElement("button");
+  button.classList.add("btn", type);
+  button.setAttribute("title", title);
+  return button;
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -18,18 +25,22 @@ const createTask = (event) => {
   const newTask = document.createElement("li");
   newTask.textContent = inputField.value;
 
-  const deleteButton = document.createElement("button");
-  deleteButton.classList.add("btn", "delete-btn");
-  deleteButton.setAttribute("title", "Видалити");
+  const deleteButton = createButton("delete-btn", "Видалити");
+  const completeButton = createButton("complete-btn", "Відмітити як виконане");
+  const favoriteButton = createButton("favorite-btn", "Додати до обраних");
+  const removeFavButton = createButton(
+    "remove-favorite-btn",
+    "Видалити з обраних"
+  );
+  const editButton = createButton("edit-btn", "Редагувати");
+  const noEditButton = createButton("edit-btn", "Закрити");
+
   deleteButton.addEventListener("click", () => {
     newTask.remove();
     checkEmpty(taskList, emptyPar);
     checkEmpty(favoriteList, emptyFavPar);
   });
 
-  const completeButton = document.createElement("button");
-  completeButton.classList.add("btn", "complete-btn");
-  completeButton.setAttribute("title", "Відмітити як виконане");
   completeButton.addEventListener("click", () => {
     if (taskList.contains(newTask)) {
       if (newTask.classList.contains("completed") !== true) {
@@ -51,12 +62,6 @@ const createTask = (event) => {
     }
   });
 
-  const favoriteButton = document.createElement("button");
-  favoriteButton.classList.add("btn", "favorite-btn");
-  favoriteButton.setAttribute("title", "Додати до обраних");
-  const removeFavButton = document.createElement("button");
-  removeFavButton.classList.add("btn", "remove-favorite-btn");
-  removeFavButton.setAttribute("title", "Видалити з обраних");
   favoriteButton.addEventListener("click", () => {
     if (newTask.classList.contains("completed")) favoriteList.prepend(newTask);
     else favoriteList.appendChild(newTask);
@@ -78,12 +83,6 @@ const createTask = (event) => {
     checkEmpty(favoriteList, emptyFavPar);
   });
 
-  const editButton = document.createElement("button");
-  editButton.classList.add("btn", "edit-btn");
-  editButton.setAttribute("title", "Редагувати");
-  const noEditButton = document.createElement("button");
-  noEditButton.classList.add("btn", "edit-btn");
-  editButton.setAttribute("title", "Закрити");
   editButton.addEventListener("click", () => {
     const termInput = document.createElement("input");
     termInput.classList.add("term-input");
