@@ -54,10 +54,24 @@ const createTask = (event) => {
   const favoriteButton = document.createElement("button");
   favoriteButton.classList.add("btn", "favorite-btn");
   favoriteButton.setAttribute("title", "Додати до обраних");
+  const removeFavButton = document.createElement("button");
+  removeFavButton.classList.add("btn", "remove-favorite-btn");
+  removeFavButton.setAttribute("title", "Видалити з обраних");
   favoriteButton.addEventListener("click", () => {
     if (newTask.classList.contains("completed")) favoriteList.prepend(newTask);
     else favoriteList.appendChild(newTask);
     newTask.classList.add("favorite-task");
+    favoriteButton.remove();
+    newTask.appendChild(removeFavButton);
+    removeFavButton.addEventListener("click", () => {
+      if (newTask.classList.contains("completed")) taskList.prepend(newTask);
+      else taskList.appendChild(newTask);
+      removeFavButton.remove();
+      newTask.classList.remove("favorite-task");
+      newTask.appendChild(favoriteButton);
+      checkEmpty(taskList, emptyPar);
+      checkEmpty(favoriteList, emptyFavPar);
+    });
     checkEmpty(taskList, emptyPar);
     checkEmpty(favoriteList, emptyFavPar);
   });

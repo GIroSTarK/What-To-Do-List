@@ -97,6 +97,9 @@ form {
 .favorite-btn {
   background-image: url(https://www.freeiconspng.com/uploads/valentine-heart-icon-6.png);
 }
+.remove-favorite-btn {
+  background-image: url(https://www.freeiconspng.com/uploads/get-broken-heart-png-pictures-16.png);
+}
 #taskText {
   padding-right: 38%;
 }
