@@ -31,12 +31,23 @@ const createTask = (event) => {
   completeButton.classList.add("btn", "complete-btn");
   completeButton.setAttribute("title", "Відмітити як виконане");
   completeButton.addEventListener("click", () => {
-    if (newTask.classList.contains("completed") !== true) {
-      newTask.classList.add("completed");
-      taskList.prepend(newTask);
-    } else {
-      newTask.classList.remove("completed");
-      taskList.appendChild(newTask);
+    if (taskList.contains(newTask)) {
+      if (newTask.classList.contains("completed") !== true) {
+        newTask.classList.add("completed");
+        taskList.prepend(newTask);
+      } else {
+        newTask.classList.remove("completed");
+        taskList.appendChild(newTask);
+      }
+    }
+    if (favoriteList.contains(newTask)) {
+      if (newTask.classList.contains("completed") !== true) {
+        newTask.classList.add("completed");
+        favoriteList.prepend(newTask);
+      } else {
+        newTask.classList.remove("completed");
+        favoriteList.appendChild(newTask);
+      }
     }
   });
 
