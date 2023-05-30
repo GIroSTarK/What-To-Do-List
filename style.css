@@ -72,6 +72,13 @@ form {
   border: 2px solid white;
   overflow: auto;
 }
+.completed {
+  background-color: rgb(220, 126, 220);
+  text-decoration: line-through;
+}
+.complete-btn {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/768px-Flat_tick_icon.svg.png);
+}
 .hide {
   display: none;
 }

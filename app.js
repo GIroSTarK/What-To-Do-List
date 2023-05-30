@@ -24,7 +24,21 @@ const createTask = (event) => {
     checkEmpty(taskList, emptyPar);
   });
 
+  const completeButton = document.createElement("button");
+  completeButton.classList.add("btn", "complete-btn");
+  completeButton.setAttribute("title", "Відмітити як виконане");
+  completeButton.addEventListener("click", () => {
+    if (newTask.classList.contains("completed") !== true) {
+      newTask.classList.add("completed");
+      taskList.prepend(newTask);
+    } else {
+      newTask.classList.remove("completed");
+      taskList.appendChild(newTask);
+    }
+  });
+
   newTask.appendChild(deleteButton);
+  newTask.appendChild(completeButton);
   taskList.appendChild(newTask);
   inputField.value = "";
   checkEmpty(taskList, emptyPar);
