@@ -25,6 +25,20 @@ const deleteTask = (event) => {
   checkEmpty(favoriteList, emptyFavPar);
 };
 
+const completeTask = (event) => {
+  const task = event.target.closest("li");
+  if (taskList.contains(task)) {
+    if (task.classList.contains("completed") !== true) taskList.prepend(task);
+    else taskList.appendChild(task);
+  }
+  if (favoriteList.contains(task)) {
+    if (task.classList.contains("completed") !== true)
+      favoriteList.prepend(task);
+    else favoriteList.appendChild(task);
+  }
+  task.classList.toggle("completed");
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -43,27 +57,7 @@ const createTask = (event) => {
   const noEditButton = createButton("edit-btn", "Закрити");
 
   deleteButton.addEventListener("click", deleteTask);
-
-  completeButton.addEventListener("click", () => {
-    if (taskList.contains(newTask)) {
-      if (newTask.classList.contains("completed") !== true) {
-        newTask.classList.add("completed");
-        taskList.prepend(newTask);
-      } else {
-        newTask.classList.remove("completed");
-        taskList.appendChild(newTask);
-      }
-    }
-    if (favoriteList.contains(newTask)) {
-      if (newTask.classList.contains("completed") !== true) {
-        newTask.classList.add("completed");
-        favoriteList.prepend(newTask);
-      } else {
-        newTask.classList.remove("completed");
-        favoriteList.appendChild(newTask);
-      }
-    }
-  });
+  completeButton.addEventListener("click", completeTask);
 
   favoriteButton.addEventListener("click", () => {
     if (newTask.classList.contains("completed")) favoriteList.prepend(newTask);
