@@ -80,7 +80,10 @@ const createTask = (event) => {
 
   const editButton = document.createElement("button");
   editButton.classList.add("btn", "edit-btn");
-  removeFavButton.setAttribute("title", "Редагувати");
+  editButton.setAttribute("title", "Редагувати");
+  const noEditButton = document.createElement("button");
+  noEditButton.classList.add("btn", "edit-btn");
+  editButton.setAttribute("title", "Закрити");
   editButton.addEventListener("click", () => {
     const termInput = document.createElement("input");
     termInput.classList.add("term-input");
@@ -88,6 +91,14 @@ const createTask = (event) => {
     const termButton = document.createElement("button");
     termButton.classList.add("main-button", "term-button");
     termButton.textContent = "Змінити";
+    editButton.remove();
+    noEditButton.addEventListener("click", () => {
+      termButton.remove();
+      termInput.remove();
+      noEditButton.remove();
+      newTask.appendChild(editButton);
+    });
+    newTask.appendChild(noEditButton);
     termButton.addEventListener("click", () => {
       if (termInput.value !== "") {
         newTask.textContent = termInput.value;
