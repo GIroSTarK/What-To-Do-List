@@ -4,6 +4,7 @@ const inputForm = document.querySelector("form");
 const taskList = document.getElementById("taskList");
 const emptyPar = document.getElementById("emptyParagraph");
 const favoriteList = document.getElementById("favoriteList");
+const emptyFavPar = document.getElementById("emptyFavParagraph");
 
 const checkEmpty = (list, p) => {
   if (list.children.length > 0) p.classList.add("hide");
@@ -23,6 +24,7 @@ const createTask = (event) => {
   deleteButton.addEventListener("click", () => {
     newTask.remove();
     checkEmpty(taskList, emptyPar);
+    checkEmpty(favoriteList, emptyFavPar);
   });
 
   const completeButton = document.createElement("button");
@@ -46,6 +48,7 @@ const createTask = (event) => {
     else favoriteList.appendChild(newTask);
     newTask.classList.add("favorite-task");
     checkEmpty(taskList, emptyPar);
+    checkEmpty(favoriteList, emptyFavPar);
   });
 
   newTask.appendChild(deleteButton);
@@ -54,6 +57,7 @@ const createTask = (event) => {
   taskList.appendChild(newTask);
   inputField.value = "";
   checkEmpty(taskList, emptyPar);
+  checkEmpty(favoriteList, emptyFavPar);
 };
 
 inputForm.addEventListener("submit", createTask);
