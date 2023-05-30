@@ -3,6 +3,7 @@
 const inputForm = document.querySelector("form");
 const taskList = document.getElementById("taskList");
 const emptyPar = document.getElementById("emptyParagraph");
+const favoriteList = document.getElementById("favoriteList");
 
 const checkEmpty = (list, p) => {
   if (list.children.length > 0) p.classList.add("hide");
@@ -37,8 +38,19 @@ const createTask = (event) => {
     }
   });
 
+  const favoriteButton = document.createElement("button");
+  favoriteButton.classList.add("btn", "favorite-btn");
+  favoriteButton.setAttribute("title", "Додати до обраних");
+  favoriteButton.addEventListener("click", () => {
+    if (newTask.classList.contains("completed")) favoriteList.prepend(newTask);
+    else favoriteList.appendChild(newTask);
+    newTask.classList.add("favorite-task");
+    checkEmpty(taskList, emptyPar);
+  });
+
   newTask.appendChild(deleteButton);
   newTask.appendChild(completeButton);
+  newTask.appendChild(favoriteButton);
   taskList.appendChild(newTask);
   inputField.value = "";
   checkEmpty(taskList, emptyPar);

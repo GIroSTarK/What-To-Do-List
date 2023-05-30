@@ -76,9 +76,6 @@ form {
   background-color: rgb(220, 126, 220);
   text-decoration: line-through;
 }
-.complete-btn {
-  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/768px-Flat_tick_icon.svg.png);
-}
 .hide {
   display: none;
 }
@@ -94,6 +91,15 @@ form {
 .delete-btn {
   background-image: url(https://cdn-icons-png.flaticon.com/512/3687/3687412.png);
 }
+.complete-btn {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/768px-Flat_tick_icon.svg.png);
+}
+.favorite-btn {
+  background-image: url(https://www.freeiconspng.com/uploads/valentine-heart-icon-6.png);
+}
 #taskText {
   padding-right: 38%;
+}
+.favorite-task {
+  color: yellow;
 }
