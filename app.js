@@ -109,6 +109,16 @@ const createTask = (event) => {
         newTask.appendChild(editButton);
       }
     });
+    termInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && termInput.value !== "") {
+        newTask.textContent = termInput.value;
+        newTask.appendChild(deleteButton);
+        newTask.appendChild(completeButton);
+        if (taskList.contains(newTask)) newTask.appendChild(favoriteButton);
+        else newTask.appendChild(removeFavButton);
+        newTask.appendChild(editButton);
+      }
+    });
     newTask.appendChild(termInput);
     termInput.focus();
     newTask.appendChild(termButton);
