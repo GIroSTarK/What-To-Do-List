@@ -2,6 +2,12 @@
 
 const inputForm = document.querySelector("form");
 const taskList = document.getElementById("taskList");
+const emptyPar = document.getElementById("emptyParagraph");
+
+const checkEmpty = (list, p) => {
+  if (list.children.length > 0) p.classList.add("hide");
+  else p.classList.remove("hide");
+};
 
 const createTask = (event) => {
   event.preventDefault();
@@ -15,11 +21,13 @@ const createTask = (event) => {
   deleteButton.setAttribute("title", "Видалити");
   deleteButton.addEventListener("click", () => {
     newTask.remove();
+    checkEmpty(taskList, emptyPar);
   });
 
   newTask.appendChild(deleteButton);
   taskList.appendChild(newTask);
   inputField.value = "";
+  checkEmpty(taskList, emptyPar);
 };
 
 inputForm.addEventListener("submit", createTask);

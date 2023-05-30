@@ -72,6 +72,9 @@ form {
   border: 2px solid white;
   overflow: auto;
 }
+.hide {
+  display: none;
+}
 .btn {
   background-color: transparent;
   margin-left: 1%;
