@@ -41,6 +41,7 @@ const completeTask = (event) => {
 
 const addFavoriteTask = (event) => {
   const task = event.target.closest("li");
+  const favoriteButton = event.target;
   const removeFavButton = createButton(
     "remove-favorite-btn",
     "Видалити з обраних"
@@ -48,12 +49,12 @@ const addFavoriteTask = (event) => {
   if (task.classList.contains("completed")) favoriteList.prepend(task);
   else favoriteList.appendChild(task);
   task.classList.add("favorite-task");
-  task.replaceChild(removeFavButton, event.target);
+  task.replaceChild(removeFavButton, favoriteButton);
   removeFavButton.addEventListener("click", () => {
     if (task.classList.contains("completed")) taskList.prepend(task);
     else taskList.appendChild(task);
     task.classList.remove("favorite-task");
-    task.replaceChild(event.target, removeFavButton);
+    task.replaceChild(favoriteButton, removeFavButton);
     checkEmpty(taskList, emptyPar);
     checkEmpty(favoriteList, emptyFavPar);
   });
@@ -63,6 +64,7 @@ const addFavoriteTask = (event) => {
 
 const editTask = (event) => {
   const task = event.target.closest("li");
+  const editButton = event.target;
   const buttonArray = Array.from(task.children);
   const noEditButton = createButton("edit-btn", "Закрити");
   const termInput = document.createElement("input");
@@ -71,11 +73,11 @@ const editTask = (event) => {
   const termButton = document.createElement("button");
   termButton.classList.add("main-button", "term-button");
   termButton.textContent = "Змінити";
-  task.replaceChild(noEditButton, event.target);
+  task.replaceChild(noEditButton, editButton);
   noEditButton.addEventListener("click", () => {
     termButton.remove();
     termInput.remove();
-    task.replaceChild(event.target, noEditButton);
+    task.replaceChild(editButton, noEditButton);
   });
   const edit = () => {
     task.textContent = termInput.value;
