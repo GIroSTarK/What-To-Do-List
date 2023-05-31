@@ -77,20 +77,18 @@ const editTask = (event) => {
     termInput.remove();
     task.replaceChild(event.target, noEditButton);
   });
+  const edit = () => {
+    task.textContent = termInput.value;
+    for (const button of buttonArray) task.appendChild(button);
+  };
   termButton.addEventListener("click", () => {
     if (termInput.value !== "") {
-      task.textContent = termInput.value;
-      for (const button of buttonArray) {
-        task.appendChild(button);
-      }
+      edit();
     }
   });
   termInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && termInput.value !== "") {
-      task.textContent = termInput.value;
-      for (const button of buttonArray) {
-        task.appendChild(button);
-      }
+      edit();
     }
   });
   task.appendChild(termInput);
