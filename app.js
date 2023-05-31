@@ -39,6 +39,28 @@ const completeTask = (event) => {
   task.classList.toggle("completed");
 };
 
+const addFavoriteTask = (event) => {
+  const task = event.target.closest("li");
+  const removeFavButton = createButton(
+    "remove-favorite-btn",
+    "Видалити з обраних"
+  );
+  if (task.classList.contains("completed")) favoriteList.prepend(task);
+  else favoriteList.appendChild(task);
+  task.classList.add("favorite-task");
+  task.replaceChild(removeFavButton, event.target);
+  removeFavButton.addEventListener("click", () => {
+    if (task.classList.contains("completed")) taskList.prepend(task);
+    else taskList.appendChild(task);
+    task.classList.remove("favorite-task");
+    task.replaceChild(event.target, removeFavButton);
+    checkEmpty(taskList, emptyPar);
+    checkEmpty(favoriteList, emptyFavPar);
+  });
+  checkEmpty(taskList, emptyPar);
+  checkEmpty(favoriteList, emptyFavPar);
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -49,32 +71,12 @@ const createTask = (event) => {
   const deleteButton = createButton("delete-btn", "Видалити");
   const completeButton = createButton("complete-btn", "Відмітити як виконане");
   const favoriteButton = createButton("favorite-btn", "Додати до обраних");
-  const removeFavButton = createButton(
-    "remove-favorite-btn",
-    "Видалити з обраних"
-  );
   const editButton = createButton("edit-btn", "Редагувати");
   const noEditButton = createButton("edit-btn", "Закрити");
 
   deleteButton.addEventListener("click", deleteTask);
   completeButton.addEventListener("click", completeTask);
-
-  favoriteButton.addEventListener("click", () => {
-    if (newTask.classList.contains("completed")) favoriteList.prepend(newTask);
-    else favoriteList.appendChild(newTask);
-    newTask.classList.add("favorite-task");
-    newTask.replaceChild(removeFavButton, favoriteButton);
-    removeFavButton.addEventListener("click", () => {
-      if (newTask.classList.contains("completed")) taskList.prepend(newTask);
-      else taskList.appendChild(newTask);
-      newTask.classList.remove("favorite-task");
-      newTask.replaceChild(favoriteButton, removeFavButton);
-      checkEmpty(taskList, emptyPar);
-      checkEmpty(favoriteList, emptyFavPar);
-    });
-    checkEmpty(taskList, emptyPar);
-    checkEmpty(favoriteList, emptyFavPar);
-  });
+  favoriteButton.addEventListener("click", addFavoriteTask);
 
   editButton.addEventListener("click", () => {
     const termInput = document.createElement("input");
