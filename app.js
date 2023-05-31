@@ -61,6 +61,43 @@ const addFavoriteTask = (event) => {
   checkEmpty(favoriteList, emptyFavPar);
 };
 
+const editTask = (event) => {
+  const task = event.target.closest("li");
+  const buttonArray = Array.from(task.children);
+  const noEditButton = createButton("edit-btn", "Закрити");
+  const termInput = document.createElement("input");
+  termInput.classList.add("term-input");
+  termInput.value = task.textContent;
+  const termButton = document.createElement("button");
+  termButton.classList.add("main-button", "term-button");
+  termButton.textContent = "Змінити";
+  task.replaceChild(noEditButton, event.target);
+  noEditButton.addEventListener("click", () => {
+    termButton.remove();
+    termInput.remove();
+    task.replaceChild(event.target, noEditButton);
+  });
+  termButton.addEventListener("click", () => {
+    if (termInput.value !== "") {
+      task.textContent = termInput.value;
+      for (const button of buttonArray) {
+        task.appendChild(button);
+      }
+    }
+  });
+  termInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && termInput.value !== "") {
+      task.textContent = termInput.value;
+      for (const button of buttonArray) {
+        task.appendChild(button);
+      }
+    }
+  });
+  task.appendChild(termInput);
+  termInput.focus();
+  task.appendChild(termButton);
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -76,42 +113,7 @@ const createTask = (event) => {
   deleteButton.addEventListener("click", deleteTask);
   completeButton.addEventListener("click", completeTask);
   favoriteButton.addEventListener("click", addFavoriteTask);
-
-  editButton.addEventListener("click", () => {
-    const buttonArray = Array.from(newTask.children);
-    const noEditButton = createButton("edit-btn", "Закрити");
-    const termInput = document.createElement("input");
-    termInput.classList.add("term-input");
-    termInput.value = newTask.textContent;
-    const termButton = document.createElement("button");
-    termButton.classList.add("main-button", "term-button");
-    termButton.textContent = "Змінити";
-    newTask.replaceChild(noEditButton, editButton);
-    noEditButton.addEventListener("click", () => {
-      termButton.remove();
-      termInput.remove();
-      newTask.replaceChild(editButton, noEditButton);
-    });
-    termButton.addEventListener("click", () => {
-      if (termInput.value !== "") {
-        newTask.textContent = termInput.value;
-        for (const button of buttonArray) {
-          newTask.appendChild(button);
-        }
-      }
-    });
-    termInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && termInput.value !== "") {
-        newTask.textContent = termInput.value;
-        for (const button of buttonArray) {
-          newTask.appendChild(button);
-        }
-      }
-    });
-    newTask.appendChild(termInput);
-    termInput.focus();
-    newTask.appendChild(termButton);
-  });
+  editButton.addEventListener("click", editTask);
 
   newTask.appendChild(deleteButton);
   newTask.appendChild(completeButton);
