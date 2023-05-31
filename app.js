@@ -72,13 +72,14 @@ const createTask = (event) => {
   const completeButton = createButton("complete-btn", "Відмітити як виконане");
   const favoriteButton = createButton("favorite-btn", "Додати до обраних");
   const editButton = createButton("edit-btn", "Редагувати");
-  const noEditButton = createButton("edit-btn", "Закрити");
 
   deleteButton.addEventListener("click", deleteTask);
   completeButton.addEventListener("click", completeTask);
   favoriteButton.addEventListener("click", addFavoriteTask);
 
   editButton.addEventListener("click", () => {
+    const buttonArray = Array.from(newTask.children);
+    const noEditButton = createButton("edit-btn", "Закрити");
     const termInput = document.createElement("input");
     termInput.classList.add("term-input");
     termInput.value = newTask.textContent;
@@ -94,21 +95,17 @@ const createTask = (event) => {
     termButton.addEventListener("click", () => {
       if (termInput.value !== "") {
         newTask.textContent = termInput.value;
-        newTask.appendChild(deleteButton);
-        newTask.appendChild(completeButton);
-        if (taskList.contains(newTask)) newTask.appendChild(favoriteButton);
-        else newTask.appendChild(removeFavButton);
-        newTask.appendChild(editButton);
+        for (const button of buttonArray) {
+          newTask.appendChild(button);
+        }
       }
     });
     termInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && termInput.value !== "") {
         newTask.textContent = termInput.value;
-        newTask.appendChild(deleteButton);
-        newTask.appendChild(completeButton);
-        if (taskList.contains(newTask)) newTask.appendChild(favoriteButton);
-        else newTask.appendChild(removeFavButton);
-        newTask.appendChild(editButton);
+        for (const button of buttonArray) {
+          newTask.appendChild(button);
+        }
       }
     });
     newTask.appendChild(termInput);
