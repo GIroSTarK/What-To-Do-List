@@ -66,18 +66,18 @@ const editTask = (event) => {
   const task = event.target.closest("li");
   const editButton = event.target;
   const buttonArray = Array.from(task.children);
-  const noEditButton = createButton("edit-btn", "Закрити");
+  const stopEditButton = createButton("edit-btn", "Закрити");
   const termInput = document.createElement("input");
   termInput.classList.add("term-input");
   termInput.value = task.textContent;
   const termButton = document.createElement("button");
   termButton.classList.add("main-button", "term-button");
   termButton.textContent = "Змінити";
-  task.replaceChild(noEditButton, editButton);
-  noEditButton.addEventListener("click", () => {
+  task.replaceChild(stopEditButton, editButton);
+  stopEditButton.addEventListener("click", () => {
     termButton.remove();
     termInput.remove();
-    task.replaceChild(editButton, noEditButton);
+    task.replaceChild(editButton, stopEditButton);
   });
   const edit = () => {
     task.textContent = termInput.value;
