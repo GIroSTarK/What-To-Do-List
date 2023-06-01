@@ -84,12 +84,12 @@ const editTask = (event) => {
     for (const button of buttonArray) task.appendChild(button);
   };
   termButton.addEventListener("click", () => {
-    if (termInput.value !== "") {
+    if (termInput.value.trim() !== "") {
       edit();
     }
   });
   termInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && termInput.value !== "") {
+    if (event.key === "Enter" && termInput.value.trim() !== "") {
       edit();
     }
   });
