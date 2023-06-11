@@ -18,6 +18,11 @@ const createButton = (type, title) => {
   return button;
 };
 
+const moveTask = (list, task) => {
+  if (!task.classList.contains("completed")) list.prepend(task);
+  else list.appendChild(task);
+};
+
 const deleteTask = (event) => {
   const task = event.target.closest("li");
   task.remove();
@@ -27,15 +32,8 @@ const deleteTask = (event) => {
 
 const completeTask = (event) => {
   const task = event.target.closest("li");
-  if (taskList.contains(task)) {
-    if (task.classList.contains("completed") !== true) taskList.prepend(task);
-    else taskList.appendChild(task);
-  }
-  if (favoriteList.contains(task)) {
-    if (task.classList.contains("completed") !== true)
-      favoriteList.prepend(task);
-    else favoriteList.appendChild(task);
-  }
+  if (taskList.contains(task)) moveTask(taskList, task);
+  if (favoriteList.contains(task)) moveTask(favoriteList, task);
   task.classList.toggle("completed");
 };
 
