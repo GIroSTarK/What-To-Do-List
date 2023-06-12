@@ -96,6 +96,96 @@ const editTask = (event) => {
   task.appendChild(termButton);
 };
 
+const saveTasksToStorage = () => {
+  const tasks = Array.from(taskList.children).map((task) => ({
+    text: task.textContent,
+    completed: task.classList.contains("completed"),
+  }));
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  const favoriteTasks = Array.from(favoriteList.children).map((task) => ({
+    text: task.textContent,
+    completed: task.classList.contains("completed"),
+  }));
+  localStorage.setItem("favoriteTasks", JSON.stringify(favoriteTasks));
+};
+
+const loadTasksFromStorage = () => {
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  const favTasks = JSON.parse(localStorage.getItem("favoriteTasks"));
+  if (tasks) {
+    for (const task of tasks) {
+      const newTask = document.createElement("li");
+      newTask.textContent = task.text;
+      if (task.completed) {
+        newTask.classList.add("completed");
+      }
+
+      const deleteButton = createButton("delete-btn", "Видалити");
+      const completeButton = createButton(
+        "complete-btn",
+        "Відмітити як виконане"
+      );
+      const favoriteButton = createButton("favorite-btn", "Додати до обраних");
+      const editButton = createButton("edit-btn", "Редагувати");
+
+      deleteButton.addEventListener("click", deleteTask);
+      completeButton.addEventListener("click", completeTask);
+      favoriteButton.addEventListener("click", addFavoriteTask);
+      editButton.addEventListener("click", editTask);
+
+      newTask.appendChild(deleteButton);
+      newTask.appendChild(completeButton);
+      newTask.appendChild(favoriteButton);
+      newTask.appendChild(editButton);
+      taskList.appendChild(newTask);
+    }
+  }
+  if (favTasks) {
+    for (const task of favTasks) {
+      const newTask = document.createElement("li");
+      newTask.textContent = task.text;
+      if (task.completed) {
+        newTask.classList.add("completed");
+      }
+      newTask.classList.add("favorite-task");
+
+      const deleteButton = createButton("delete-btn", "Видалити");
+      const completeButton = createButton(
+        "complete-btn",
+        "Відмітити як виконане"
+      );
+      const favoriteButton = createButton("favorite-btn", "Додати до обраних");
+      const removeFavButton = createButton(
+        "remove-favorite-btn",
+        "Видалити з обраних"
+      );
+      const editButton = createButton("edit-btn", "Редагувати");
+
+      deleteButton.addEventListener("click", deleteTask);
+      completeButton.addEventListener("click", completeTask);
+      favoriteButton.addEventListener("click", addFavoriteTask);
+      removeFavButton.addEventListener("click", () => {
+        if (newTask.classList.contains("completed")) taskList.prepend(newTask);
+        else taskList.appendChild(newTask);
+        newTask.classList.remove("favorite-task");
+        newTask.replaceChild(favoriteButton, removeFavButton);
+        checkEmpty(taskList, emptyPar);
+        checkEmpty(favoriteList, emptyFavPar);
+      });
+      editButton.addEventListener("click", editTask);
+
+      newTask.appendChild(deleteButton);
+      newTask.appendChild(completeButton);
+      newTask.appendChild(removeFavButton);
+      newTask.appendChild(editButton);
+      favoriteList.appendChild(newTask);
+    }
+  }
+  checkEmpty(taskList, emptyPar);
+  checkEmpty(favoriteList, emptyFavPar);
+};
+
 const createTask = (event) => {
   event.preventDefault();
   const inputField = inputForm.querySelector("input");
@@ -124,3 +214,5 @@ const createTask = (event) => {
 };
 
 inputForm.addEventListener("submit", createTask);
+window.addEventListener("beforeunload", saveTasksToStorage);
+window.addEventListener("load", loadTasksFromStorage);
