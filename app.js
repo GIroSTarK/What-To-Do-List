@@ -37,7 +37,7 @@ const completeTask = (event) => {
   task.classList.toggle("completed");
 };
 
-const addFavoriteTask = (event) => {
+const addToFavorite = (event) => {
   const task = event.target.closest("li");
   const favoriteButton = event.target;
   const removeFavButton = createButton(
@@ -109,7 +109,7 @@ const addTask = (task, list) => {
 
   deleteButton.addEventListener("click", deleteTask);
   completeButton.addEventListener("click", completeTask);
-  favoriteButton.addEventListener("click", addFavoriteTask);
+  favoriteButton.addEventListener("click", addToFavorite);
   removeFavButton.addEventListener("click", () => {
     if (task.classList.contains("completed")) taskList.prepend(task);
     else taskList.appendChild(task);
