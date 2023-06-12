@@ -127,6 +127,15 @@ const addTask = (task, list) => {
   task.appendChild(editButton);
 };
 
+const renewTask = (task) => {
+  const newTask = document.createElement("li");
+  newTask.textContent = task.text;
+  if (task.completed) {
+    newTask.classList.add("completed");
+  }
+  return newTask;
+};
+
 const grabTasks = (list) => {
   const tasks = Array.from(list.children).map((task) => ({
     text: task.textContent,
@@ -148,23 +157,15 @@ const loadTasksFromStorage = () => {
   const favTasks = JSON.parse(localStorage.getItem("favoriteTasks"));
   if (tasks) {
     for (const task of tasks) {
-      const newTask = document.createElement("li");
-      newTask.textContent = task.text;
-      if (task.completed) {
-        newTask.classList.add("completed");
-      }
-      addTask(newTask, taskList);
+      const renewedTask = renewTask(task);
+      addTask(renewedTask, taskList);
     }
   }
   if (favTasks) {
     for (const task of favTasks) {
-      const newTask = document.createElement("li");
-      newTask.textContent = task.text;
-      if (task.completed) {
-        newTask.classList.add("completed");
-      }
-      newTask.classList.add("favorite-task");
-      addTask(newTask, favoriteList);
+      const renewedTask = renewTask(task);
+      renewedTask.classList.add("favorite-task");
+      addTask(renewedTask, favoriteList);
     }
   }
   checkEmpty(taskList, emptyPar);
