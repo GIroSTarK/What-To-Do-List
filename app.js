@@ -96,6 +96,37 @@ const editTask = (event) => {
   task.appendChild(termButton);
 };
 
+const addTask = (task, list) => {
+  list.appendChild(task);
+  const deleteButton = createButton("delete-btn", "Видалити");
+  const completeButton = createButton("complete-btn", "Відмітити як виконане");
+  const favoriteButton = createButton("favorite-btn", "Додати до обраних");
+  const removeFavButton = createButton(
+    "remove-favorite-btn",
+    "Видалити з обраних"
+  );
+  const editButton = createButton("edit-btn", "Редагувати");
+
+  deleteButton.addEventListener("click", deleteTask);
+  completeButton.addEventListener("click", completeTask);
+  favoriteButton.addEventListener("click", addFavoriteTask);
+  removeFavButton.addEventListener("click", () => {
+    if (task.classList.contains("completed")) taskList.prepend(task);
+    else taskList.appendChild(task);
+    task.classList.remove("favorite-task");
+    task.replaceChild(favoriteButton, removeFavButton);
+    checkEmpty(taskList, emptyPar);
+    checkEmpty(favoriteList, emptyFavPar);
+  });
+  editButton.addEventListener("click", editTask);
+
+  task.appendChild(deleteButton);
+  task.appendChild(completeButton);
+  if (taskList.contains(task)) task.appendChild(favoriteButton);
+  else task.appendChild(removeFavButton);
+  task.appendChild(editButton);
+};
+
 const grabTasks = (list) => {
   const tasks = Array.from(list.children).map((task) => ({
     text: task.textContent,
@@ -122,25 +153,7 @@ const loadTasksFromStorage = () => {
       if (task.completed) {
         newTask.classList.add("completed");
       }
-
-      const deleteButton = createButton("delete-btn", "Видалити");
-      const completeButton = createButton(
-        "complete-btn",
-        "Відмітити як виконане"
-      );
-      const favoriteButton = createButton("favorite-btn", "Додати до обраних");
-      const editButton = createButton("edit-btn", "Редагувати");
-
-      deleteButton.addEventListener("click", deleteTask);
-      completeButton.addEventListener("click", completeTask);
-      favoriteButton.addEventListener("click", addFavoriteTask);
-      editButton.addEventListener("click", editTask);
-
-      newTask.appendChild(deleteButton);
-      newTask.appendChild(completeButton);
-      newTask.appendChild(favoriteButton);
-      newTask.appendChild(editButton);
-      taskList.appendChild(newTask);
+      addTask(newTask, taskList);
     }
   }
   if (favTasks) {
@@ -151,37 +164,7 @@ const loadTasksFromStorage = () => {
         newTask.classList.add("completed");
       }
       newTask.classList.add("favorite-task");
-
-      const deleteButton = createButton("delete-btn", "Видалити");
-      const completeButton = createButton(
-        "complete-btn",
-        "Відмітити як виконане"
-      );
-      const favoriteButton = createButton("favorite-btn", "Додати до обраних");
-      const removeFavButton = createButton(
-        "remove-favorite-btn",
-        "Видалити з обраних"
-      );
-      const editButton = createButton("edit-btn", "Редагувати");
-
-      deleteButton.addEventListener("click", deleteTask);
-      completeButton.addEventListener("click", completeTask);
-      favoriteButton.addEventListener("click", addFavoriteTask);
-      removeFavButton.addEventListener("click", () => {
-        if (newTask.classList.contains("completed")) taskList.prepend(newTask);
-        else taskList.appendChild(newTask);
-        newTask.classList.remove("favorite-task");
-        newTask.replaceChild(favoriteButton, removeFavButton);
-        checkEmpty(taskList, emptyPar);
-        checkEmpty(favoriteList, emptyFavPar);
-      });
-      editButton.addEventListener("click", editTask);
-
-      newTask.appendChild(deleteButton);
-      newTask.appendChild(completeButton);
-      newTask.appendChild(removeFavButton);
-      newTask.appendChild(editButton);
-      favoriteList.appendChild(newTask);
+      addTask(newTask, favoriteList);
     }
   }
   checkEmpty(taskList, emptyPar);
@@ -194,22 +177,7 @@ const createTask = (event) => {
   if (inputField.value.trim() === "") return;
   const newTask = document.createElement("li");
   newTask.textContent = inputField.value;
-
-  const deleteButton = createButton("delete-btn", "Видалити");
-  const completeButton = createButton("complete-btn", "Відмітити як виконане");
-  const favoriteButton = createButton("favorite-btn", "Додати до обраних");
-  const editButton = createButton("edit-btn", "Редагувати");
-
-  deleteButton.addEventListener("click", deleteTask);
-  completeButton.addEventListener("click", completeTask);
-  favoriteButton.addEventListener("click", addFavoriteTask);
-  editButton.addEventListener("click", editTask);
-
-  newTask.appendChild(deleteButton);
-  newTask.appendChild(completeButton);
-  newTask.appendChild(favoriteButton);
-  newTask.appendChild(editButton);
-  taskList.appendChild(newTask);
+  addTask(newTask, taskList);
   inputField.value = "";
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
