@@ -96,18 +96,20 @@ const editTask = (event) => {
   task.appendChild(termButton);
 };
 
-const saveTasksToStorage = () => {
-  const tasks = Array.from(taskList.children).map((task) => ({
+const grabTasks = (list) => {
+  const tasks = Array.from(list.children).map((task) => ({
     text: task.textContent,
     completed: task.classList.contains("completed"),
   }));
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  return tasks;
+};
 
-  const favoriteTasks = Array.from(favoriteList.children).map((task) => ({
-    text: task.textContent,
-    completed: task.classList.contains("completed"),
-  }));
-  localStorage.setItem("favoriteTasks", JSON.stringify(favoriteTasks));
+const saveTasksToStorage = () => {
+  localStorage.setItem("tasks", JSON.stringify(grabTasks(taskList)));
+  localStorage.setItem(
+    "favoriteTasks",
+    JSON.stringify(grabTasks(favoriteList))
+  );
 };
 
 const loadTasksFromStorage = () => {
