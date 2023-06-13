@@ -82,14 +82,10 @@ const editTask = (event) => {
     for (const button of buttonArray) task.appendChild(button);
   };
   termButton.addEventListener("click", () => {
-    if (termInput.value.trim() !== "") {
-      edit();
-    }
+    if (termInput.value.trim() !== "") edit();
   });
   termInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && termInput.value.trim() !== "") {
-      edit();
-    }
+    if (event.key === "Enter" && termInput.value.trim() !== "") edit();
   });
   task.appendChild(termInput);
   termInput.focus();
@@ -130,9 +126,7 @@ const addTask = (task, list) => {
 const renewTask = (task) => {
   const newTask = document.createElement("li");
   newTask.textContent = task.text;
-  if (task.completed) {
-    newTask.classList.add("completed");
-  }
+  if (task.completed) newTask.classList.add("completed");
   return newTask;
 };
 
