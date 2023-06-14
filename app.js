@@ -195,10 +195,6 @@ const createTask = (event) => {
   checkEmpty(favoriteList, emptyFavPar);
 };
 
-inputForm.addEventListener("submit", createTask);
-window.addEventListener("beforeunload", saveTasksToStorage);
-window.addEventListener("load", loadTasksFromStorage);
-
 const search = (inputField) => {
   const searchText = inputField.value.toLowerCase();
   const tasks = document.getElementsByTagName("li");
@@ -231,3 +227,7 @@ searchButton.addEventListener("click", () => {
   termInput.focus();
   searchBlock.insertBefore(termButton, closeSearchButton);
 });
+
+inputForm.addEventListener("submit", createTask);
+window.addEventListener("beforeunload", saveTasksToStorage);
+window.addEventListener("load", loadTasksFromStorage);
