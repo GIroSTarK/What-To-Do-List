@@ -5,6 +5,8 @@ const taskList = document.getElementById("taskList");
 const emptyPar = document.getElementById("emptyParagraph");
 const favoriteList = document.getElementById("favoriteList");
 const emptyFavPar = document.getElementById("emptyFavParagraph");
+const searchBlock = document.getElementById("searchBlock");
+const searchButton = document.querySelector(".search-btn");
 
 const checkEmpty = (list, p) => {
   if (list.children.length > 0) p.classList.add("hide");
@@ -181,3 +183,41 @@ const createTask = (event) => {
 inputForm.addEventListener("submit", createTask);
 window.addEventListener("beforeunload", saveTasksToStorage);
 window.addEventListener("load", loadTasksFromStorage);
+
+const search = (inputField) => {
+  const searchText = inputField.value.toLowerCase();
+  const tasks = document.getElementsByTagName("li");
+  for (const task of tasks) {
+    const taskText = task.textContent.toLowerCase();
+    if (taskText.includes(searchText)) task.style.display = "block";
+    else task.style.display = "none";
+  }
+};
+
+searchButton.addEventListener("click", () => {
+  const tasks = document.getElementsByTagName("li");
+  const closeSearchButton = createButton("search-btn", "Закрити");
+  const termInput = document.createElement("input");
+  termInput.classList.add("term-input", "term-search");
+  termInput.placeholder = "Пошук завдання";
+  const termButton = document.createElement("button");
+  termButton.classList.add("main-button", "term-search-btn", "term-search");
+  termButton.textContent = "Пошук";
+  searchBlock.replaceChild(closeSearchButton, searchButton);
+  closeSearchButton.addEventListener("click", () => {
+    termInput.remove();
+    termButton.remove();
+    searchBlock.replaceChild(searchButton, closeSearchButton);
+    for (const task of tasks) task.style.display = "block";
+  });
+  const searchTask = () => search(termInput);
+  termButton.addEventListener("click", () => {
+    searchTask();
+  });
+  termInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") searchTask();
+  });
+  searchBlock.insertBefore(termInput, closeSearchButton);
+  termInput.focus();
+  searchBlock.insertBefore(termButton, closeSearchButton);
+});

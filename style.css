@@ -6,6 +6,9 @@ body {
 h1 {
   text-align: center;
   font-size: 150px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-bottom: 5%;
 }
 input {
   font-size: 40px;
@@ -103,6 +106,16 @@ form {
 .edit-btn {
   background-image: url(https://www.freeiconspng.com/uploads/edit-icon-orange-pencil-0.png);
 }
+.search-btn {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/VisualEditor_-_Icon_-_Search-big_-_white.svg/1200px-VisualEditor_-_Icon_-_Search-big_-_white.svg.png);
+  width: 75px;
+  height: 75px;
+}
+#searchBlock {
+  height: 6vh;
+  display: flex;
+  justify-content: flex-end;
+}
 #taskText {
   padding-right: 38%;
 }
@@ -119,4 +132,14 @@ form {
 }
 .term-button:hover {
   background-color: rgb(0, 101, 138);
+}
+.term-search {
+  margin-top: 0.7%;
+}
+.term-search-btn {
+  font-size: 18px;
+  background-color: rgb(0, 211, 141);
+}
+.term-search-btn:hover {
+  background-color: rgb(11, 112, 78);
 }
