@@ -62,17 +62,28 @@ const addToFavorite = (event) => {
   checkEmpty(favoriteList, emptyFavPar);
 };
 
+const createTermButton = (name, ...btnClass) => {
+  const termButton = document.createElement("button");
+  termButton.classList.add("main-button", ...btnClass);
+  termButton.textContent = name;
+  return termButton;
+};
+
+const createTermInput = (placeholder, ...inputClass) => {
+  const termInput = document.createElement("input");
+  termInput.classList.add("term-input", ...inputClass);
+  termInput.placeholder = placeholder;
+  return termInput;
+};
+
 const editTask = (event) => {
   const task = event.target.closest("li");
   const editButton = event.target;
   const buttonArray = Array.from(task.children);
   const stopEditButton = createButton("edit-btn", "Закрити");
-  const termInput = document.createElement("input");
-  termInput.classList.add("term-input");
+  const termInput = createTermInput("Введіть нову назву");
   termInput.value = task.textContent;
-  const termButton = document.createElement("button");
-  termButton.classList.add("main-button", "term-button");
-  termButton.textContent = "Змінити";
+  const termButton = createTermButton("Замінити", "term-button");
   task.replaceChild(stopEditButton, editButton);
   stopEditButton.addEventListener("click", () => {
     termButton.remove();
@@ -197,12 +208,12 @@ const search = (inputField) => {
 searchButton.addEventListener("click", () => {
   const tasks = document.getElementsByTagName("li");
   const closeSearchButton = createButton("search-btn", "Закрити");
-  const termInput = document.createElement("input");
-  termInput.classList.add("term-input", "term-search");
-  termInput.placeholder = "Пошук завдання";
-  const termButton = document.createElement("button");
-  termButton.classList.add("main-button", "term-search-btn", "term-search");
-  termButton.textContent = "Пошук";
+  const termInput = createTermInput("Пошук завдання", "term-search");
+  const termButton = createTermButton(
+    "Пошук",
+    "term-search-btn",
+    "term-search"
+  );
   searchBlock.replaceChild(closeSearchButton, searchButton);
   closeSearchButton.addEventListener("click", () => {
     termInput.remove();
