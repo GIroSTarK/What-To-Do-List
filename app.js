@@ -39,6 +39,15 @@ const completeTask = (event) => {
   task.classList.toggle("completed");
 };
 
+const removeFromFavorite = (task, favoriteBtn, removeFavBtn) => {
+  if (task.classList.contains("completed")) taskList.prepend(task);
+  else taskList.appendChild(task);
+  task.classList.remove("favorite-task");
+  task.replaceChild(favoriteBtn, removeFavBtn);
+  checkEmpty(taskList, emptyPar);
+  checkEmpty(favoriteList, emptyFavPar);
+};
+
 const addToFavorite = (event) => {
   const task = event.target.closest("li");
   const favoriteButton = event.target;
@@ -50,14 +59,9 @@ const addToFavorite = (event) => {
   else favoriteList.appendChild(task);
   task.classList.add("favorite-task");
   task.replaceChild(removeFavButton, favoriteButton);
-  removeFavButton.addEventListener("click", () => {
-    if (task.classList.contains("completed")) taskList.prepend(task);
-    else taskList.appendChild(task);
-    task.classList.remove("favorite-task");
-    task.replaceChild(favoriteButton, removeFavButton);
-    checkEmpty(taskList, emptyPar);
-    checkEmpty(favoriteList, emptyFavPar);
-  });
+  removeFavButton.addEventListener("click", () =>
+    removeFromFavorite(task, favoriteButton, removeFavButton)
+  );
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
 };
@@ -123,14 +127,9 @@ const addTask = (task, list) => {
   deleteButton.addEventListener("click", deleteTask);
   completeButton.addEventListener("click", completeTask);
   favoriteButton.addEventListener("click", addToFavorite);
-  removeFavButton.addEventListener("click", () => {
-    if (task.classList.contains("completed")) taskList.prepend(task);
-    else taskList.appendChild(task);
-    task.classList.remove("favorite-task");
-    task.replaceChild(favoriteButton, removeFavButton);
-    checkEmpty(taskList, emptyPar);
-    checkEmpty(favoriteList, emptyFavPar);
-  });
+  removeFavButton.addEventListener("click", () =>
+    removeFromFavorite(task, favoriteButton, removeFavButton)
+  );
   editButton.addEventListener("click", editTask);
 
   task.appendChild(deleteButton);
