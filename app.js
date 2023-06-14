@@ -221,12 +221,9 @@ searchButton.addEventListener("click", () => {
     searchBlock.replaceChild(searchButton, closeSearchButton);
     for (const task of tasks) task.classList.remove("hide");
   });
-  const searchTask = () => search(termInput);
-  termButton.addEventListener("click", () => {
-    searchTask();
-  });
+  termButton.addEventListener("click", () => search(termInput));
   termInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") searchTask();
+    if (event.key === "Enter") search(termInput);
   });
   searchBlock.insertBefore(termInput, closeSearchButton);
   termInput.focus();
