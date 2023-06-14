@@ -189,8 +189,8 @@ const search = (inputField) => {
   const tasks = document.getElementsByTagName("li");
   for (const task of tasks) {
     const taskText = task.textContent.toLowerCase();
-    if (taskText.includes(searchText)) task.style.display = "block";
-    else task.style.display = "none";
+    if (!taskText.includes(searchText)) task.classList.add("hide");
+    else task.classList.remove("hide");
   }
 };
 
@@ -208,7 +208,7 @@ searchButton.addEventListener("click", () => {
     termInput.remove();
     termButton.remove();
     searchBlock.replaceChild(searchButton, closeSearchButton);
-    for (const task of tasks) task.style.display = "block";
+    for (const task of tasks) task.classList.remove("hide");
   });
   const searchTask = () => search(termInput);
   termButton.addEventListener("click", () => {
