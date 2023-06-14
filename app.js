@@ -76,6 +76,12 @@ const createTermInput = (placeholder, ...inputClass) => {
   return termInput;
 };
 
+const close = (target, input, ...buttons) => {
+  buttons[0].remove();
+  input.remove();
+  target.replaceChild(buttons[1], buttons[2]);
+};
+
 const editTask = (event) => {
   const task = event.target.closest("li");
   const editButton = event.target;
@@ -85,11 +91,9 @@ const editTask = (event) => {
   termInput.value = task.textContent;
   const termButton = createTermButton("Замінити", "term-button");
   task.replaceChild(stopEditButton, editButton);
-  stopEditButton.addEventListener("click", () => {
-    termButton.remove();
-    termInput.remove();
-    task.replaceChild(editButton, stopEditButton);
-  });
+  stopEditButton.addEventListener("click", () =>
+    close(task, termInput, termButton, editButton, stopEditButton)
+  );
   const edit = () => {
     task.textContent = termInput.value;
     for (const button of buttonArray) task.appendChild(button);
@@ -216,9 +220,7 @@ searchButton.addEventListener("click", () => {
   );
   searchBlock.replaceChild(closeSearchButton, searchButton);
   closeSearchButton.addEventListener("click", () => {
-    termInput.remove();
-    termButton.remove();
-    searchBlock.replaceChild(searchButton, closeSearchButton);
+    close(searchBlock, termInput, termButton, searchButton, closeSearchButton);
     for (const task of tasks) task.classList.remove("hide");
   });
   termButton.addEventListener("click", () => search(termInput));
