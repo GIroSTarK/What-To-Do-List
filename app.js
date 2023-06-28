@@ -80,10 +80,10 @@ const createTermInput = (placeholder, ...inputClass) => {
   return termInput;
 };
 
-const close = (target, input, ...buttons) => {
-  buttons[0].remove();
-  input.remove();
-  target.replaceChild(buttons[1], buttons[2]);
+const close = (target, termInput, termBtn, firstBtn, secondBtn) => {
+  termBtn.remove();
+  termInput.remove();
+  target.replaceChild(firstBtn, secondBtn);
 };
 
 const editTask = (event) => {
