@@ -6,7 +6,7 @@ import {
   createTermButton,
   close,
 } from "./manage.js";
-import { saveTasksToStorage, loadTasksFromStorage } from "./save.js";
+import "./save.js";
 import "./search.js";
 
 export const inputForm = document.querySelector("form");
@@ -122,5 +122,3 @@ const createTask = (event) => {
 };
 
 inputForm.addEventListener("submit", createTask);
-window.addEventListener("beforeunload", saveTasksToStorage);
-window.addEventListener("load", loadTasksFromStorage);

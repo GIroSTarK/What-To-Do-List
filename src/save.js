@@ -22,7 +22,7 @@ const renewTask = (task) => {
   return newTask;
 };
 
-export const saveTasksToStorage = () => {
+const saveTasksToStorage = () => {
   localStorage.setItem("tasks", JSON.stringify(grabTasks(taskList)));
   localStorage.setItem(
     "favoriteTasks",
@@ -30,7 +30,7 @@ export const saveTasksToStorage = () => {
   );
 };
 
-export const loadTasksFromStorage = () => {
+const loadTasksFromStorage = () => {
   const tasks = JSON.parse(localStorage.getItem("tasks"));
   const favTasks = JSON.parse(localStorage.getItem("favoriteTasks"));
   if (tasks) {
@@ -49,3 +49,6 @@ export const loadTasksFromStorage = () => {
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
 };
+
+window.addEventListener("beforeunload", saveTasksToStorage);
+window.addEventListener("load", loadTasksFromStorage);
