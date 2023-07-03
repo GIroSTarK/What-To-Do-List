@@ -5,6 +5,7 @@ import {
   createTermInput,
   createTermButton,
   close,
+  checkHidden,
 } from "./manage.js";
 import "./save.js";
 import "./search.js";
@@ -20,6 +21,8 @@ const deleteTask = (event) => {
   task.remove();
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
+  checkHidden(taskList, emptyPar);
+  checkHidden(favoriteList, emptyFavPar);
 };
 
 const completeTask = (event) => {
@@ -36,6 +39,8 @@ const removeFromFavorite = (task, favoriteBtn, removeFavBtn) => {
   task.replaceChild(favoriteBtn, removeFavBtn);
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
+  checkHidden(taskList, emptyPar);
+  checkHidden(favoriteList, emptyFavPar);
 };
 
 const addToFavorite = (event) => {
@@ -54,6 +59,8 @@ const addToFavorite = (event) => {
   );
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
+  checkHidden(taskList, emptyPar);
+  checkHidden(favoriteList, emptyFavPar);
 };
 
 const editTask = (event) => {
@@ -119,6 +126,8 @@ const createTask = (event) => {
   inputField.value = "";
   checkEmpty(taskList, emptyPar);
   checkEmpty(favoriteList, emptyFavPar);
+  checkHidden(taskList, emptyPar);
+  checkHidden(favoriteList, emptyFavPar);
 };
 
 inputForm.addEventListener("submit", createTask);

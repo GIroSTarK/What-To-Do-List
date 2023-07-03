@@ -34,3 +34,9 @@ export const close = (target, termInput, termBtn, firstBtn, secondBtn) => {
   termInput.remove();
   target.replaceChild(firstBtn, secondBtn);
 };
+
+export const checkHidden = (list, p) => {
+  if (list.getElementsByClassName("hide").length === list.children.length)
+    p.classList.remove("hide");
+  else p.classList.add("hide");
+};

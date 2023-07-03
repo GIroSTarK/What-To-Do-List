@@ -3,7 +3,9 @@ import {
   createTermInput,
   createTermButton,
   close,
+  checkHidden,
 } from "./manage.js";
+import { taskList, favoriteList, emptyPar, emptyFavPar } from "./app.js";
 
 const searchBlock = document.getElementById("searchBlock");
 const searchButton = document.querySelector(".search-btn");
@@ -16,6 +18,8 @@ const search = (inputField) => {
     if (!taskText.includes(searchText)) task.classList.add("hide");
     else task.classList.remove("hide");
   }
+  checkHidden(taskList, emptyPar);
+  checkHidden(favoriteList, emptyFavPar);
 };
 
 searchButton.addEventListener("click", () => {
@@ -31,6 +35,8 @@ searchButton.addEventListener("click", () => {
   closeSearchButton.addEventListener("click", () => {
     close(searchBlock, termInput, termButton, searchButton, closeSearchButton);
     for (const task of tasks) task.classList.remove("hide");
+    checkHidden(taskList, emptyPar);
+    checkHidden(favoriteList, emptyFavPar);
   });
   termButton.addEventListener("click", () => search(termInput));
   termInput.addEventListener("keydown", (event) => {
